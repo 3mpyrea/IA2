@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Creature : MonoBehaviour
+public class IState : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -12,10 +12,5 @@ public class Creature : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void SetDestination(Vector3 Destiny)
-    {
-
     }
 }
