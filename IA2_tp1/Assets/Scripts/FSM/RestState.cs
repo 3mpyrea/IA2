@@ -1,16 +1,31 @@
 using UnityEngine;
 
-public class RestState : MonoBehaviour
+public class RestState : States
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Creature animal;
+
+    public RestState(Creature animal)
     {
-        
+        this.animal = animal;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnEnter()
     {
-        
+        animal.IsResting = true;
+    }
+
+    public override void OnUpdate()
+    {
+        animal.RecoverEnergy(15f * Time.deltaTime);
+
+        if (animal.Energy >= animal.MaxEnergy)
+        {
+            animal.ChangeState(CreatureStateMachine.CreatureStates.roam);
+        }
+    }
+
+    public override void OnExit()
+    {
+        animal.IsResting = false;
     }
 }

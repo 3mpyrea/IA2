@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.VersionControl.Asset;
 
-public class CreatureStateMachine 
+public class CreatureStateMachine
 {
-    States _currentState;
+    public enum CreatureStates
+    {
+        seekResource, consumeResource, rest, roam
+    }
 
-    Dictionary<CreatureStates, States> _allStates = new Dictionary<CreatureStates, States>();
-
+    private States _currentState;
+    private Dictionary<CreatureStates, States> _allStates = new Dictionary<CreatureStates, States>();
 
     public void Update()
     {
@@ -19,27 +21,19 @@ public class CreatureStateMachine
         if (!_allStates.ContainsKey(name))
         {
             _allStates.Add(name, state);
-            state.fsm = this;
         }
         else
         {
             _allStates[name] = state;
         }
-
     }
+
     public void ChangeState(CreatureStates name)
     {
-        if (_currentState != _allStates[name])
-        {
-            _currentState?.OnExit();
-            if (_allStates.ContainsKey(name)) { _currentState = _allStates[name]; }
-            _currentState.OnEnter();
-        }
-        else { return; }
-    }
+        if (_currentState == _allStates[name]) return;
 
-    public enum CreatureStates
-    {
-        seekResource, consumeResource, rest
+        _currentState?.OnExit();
+        _currentState = _allStates[name];
+        _currentState.OnEnter();
     }
 }

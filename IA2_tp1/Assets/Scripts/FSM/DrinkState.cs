@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class DrinkState : MonoBehaviour
+public class DrinkState : States
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Creature animal;
+
+    public DrinkState(Creature animal)
     {
-        
+        this.animal = animal;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override void OnEnter() { }
+    public override void OnUpdate() { }
+    public override void OnExit() { }
 }

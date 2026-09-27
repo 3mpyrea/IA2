@@ -4,10 +4,17 @@ using UnityEngine;
 public class RestZone : MonoBehaviour
 {
     public int capacity = 1;
+    public float gizmosSize = 1f;
     private List<Transform> occupants = new List<Transform>();
 
     public bool HasSpace => occupants.Count < capacity;
 
     public void Occupy(Transform who) => occupants.Add(who);
     public void Release(Transform who) => occupants.Remove(who);
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = HasSpace ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(transform.position, gizmosSize);
+    }
 }
