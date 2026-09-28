@@ -81,4 +81,10 @@ public class Creature : MonoBehaviour
     {
         fsm.ChangeState(state);
     }
+
+    public void ClearDestination()
+    {
+        hasDestination = false;
+    }
+
 }

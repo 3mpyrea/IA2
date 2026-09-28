@@ -13,6 +13,13 @@ public class SearchRestState : States
 
     public override void OnEnter()
     {
+        if (provider.AllZonesOccupied())
+        {
+            animal.ClearDestination();
+            animal.ChangeState(CreatureStateMachine.CreatureStates.roam);
+            return;
+        }
+    
         var zone = provider.GetClosestAvailableZone(animal.transform.position);
         if (zone != null)
         {
@@ -22,6 +29,7 @@ public class SearchRestState : States
         }
         else
         {
+            animal.ClearDestination();
             animal.ChangeState(CreatureStateMachine.CreatureStates.roam);
         }
     }
@@ -29,6 +37,8 @@ public class SearchRestState : States
 
     public override void OnUpdate()
     {
+        if (animal.CurrentRestZone == null) return;
+    
         if (Vector3.Distance(animal.transform.position, animal.Destination) < 0.5f)
         {
             animal.ChangeState(CreatureStateMachine.CreatureStates.rest);
@@ -38,11 +48,12 @@ public class SearchRestState : States
     public override void OnExit()
     {
         animal.IsResting = false;
+    
         if (animal.CurrentRestZone != null)
         {
             animal.CurrentRestZone.Release(animal.transform);
             animal.CurrentRestZone = null;
         }
     }
-    
+
 }

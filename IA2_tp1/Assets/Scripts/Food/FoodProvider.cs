@@ -23,6 +23,7 @@ public class FoodProvider : MonoBehaviour
         return allFood
             .Where(f => f != null && !f.IsConsumed)
             .OrderBy(f => Vector3.Distance(origin, f.transform.position))
+            //.ThenByDescending(f => f.nutritionValue)
             .FirstOrDefault();
     }
 

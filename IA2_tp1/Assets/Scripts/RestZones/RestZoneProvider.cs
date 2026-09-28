@@ -21,11 +21,16 @@ public class RestZoneProvider : MonoBehaviour
     {
         return GetAvailableZones()
             .OrderBy(z => Vector3.Distance(origin, z.transform.position))
-            .FirstOrDefault(); 
+            .FirstOrDefault();
     }
 
     public bool HasAnyAvailableZone()
     {
         return GetAvailableZones().Any();
+    }
+
+    public bool AllZonesOccupied()
+    {
+        return allZones.All(z => z != null && !z.HasSpace);
     }
 }
